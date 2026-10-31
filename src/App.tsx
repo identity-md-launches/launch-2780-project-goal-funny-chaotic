@@ -168,6 +168,7 @@ export default function App() {
               setLocked={setLocked}
               onEnd={onEnd}
               onHelp={() => pauseFor(setHelpOpen)}
+              onViewResult={() => setResultOpen(true)}
               restart={restart}
               onRestartConsumed={() => setRestart(false)}
             />

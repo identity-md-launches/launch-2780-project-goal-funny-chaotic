@@ -98,8 +98,10 @@ The animation loop waits for nonzero measured dimensions before drawing.
 The wardrobe has three columns on desktop/phones and four on intermediate
 stacked layouts. Its category controls sit above the choices. The leaderboard
 places a device-best summary beside the public table on desktop and below it on
-mobile; local scores never appear as on-chain entries. Long player addresses wrap
-within fixed table columns.
+mobile; local scores never appear as on-chain entries. The fixed-layout table
+uses a 50px rank column, a 128px score column (enough for the contract's
+1,000,000,000 maximum) and a fluid name column; nicknames and player addresses
+wrap anywhere and the row grows instead of scrolling the page.
 
 Spacing is explicit in CSS: common within-group gaps are 6, 8 and 12px; section
 and column gaps use 20–28px; major sections are separated by 36–54px. The interface
@@ -130,7 +132,7 @@ Canvas scene is clipped; addresses and informative text are not ellipsized.
 | Pattern | Source | Behavior and reuse |
 | --- | --- | --- |
 | Primary/secondary/text/icon buttons | `src/styles.css`, `components/Icon.tsx` | One green primary action per active surface; neutral peers. Explicit hover/focus/active/disabled states. Icons use `currentColor`, 1.8px strokes, accessible names supplied by controls. |
-| `GameBoard` | `components/GameBoard.tsx` | Ready, running, paused and ended states. Focusable control group; keyboard, pointer and touch buttons. HUD, Start, pause and feedback live inside the scene. |
+| `GameBoard` | `components/GameBoard.tsx` | Ready, running, paused and ended states. Focusable control group; keyboard, pointer and touch buttons. HUD, Start, pause and feedback live inside the scene. The ended state stacks **Run again** (primary) over **View results** (secondary), which reopens the dismissed result dialog with its score and nickname. |
 | `Wardrobe` | `components/Wardrobe.tsx` | Three category buttons with `aria-pressed`; native choice buttons with selected checkmarks. A disabled fieldset prevents outfit changes during play. Preview art uses the same drawing functions as the game. |
 | `LiveStrip` | `components/LiveStrip.tsx` | Definition-list data, correctly nested progressbar and a text-backed spinning/idle/stale indicator. Detail action exposes source addresses and units. |
 | `Leaderboard` | `components/Leaderboard.tsx` | Loading, deployment-pending, empty, filled, stale-read and retry states. Full address links; public reads never require a wallet. |

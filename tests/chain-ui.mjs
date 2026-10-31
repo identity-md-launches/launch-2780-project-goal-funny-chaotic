@@ -346,6 +346,17 @@ try {
     .waitFor();
   check("Duplicate/lower score is caught before requesting a signature");
   await page.getByRole("button", { name: "Close", exact: true }).click();
+  await page.getByRole("button", { name: "View results", exact: true }).click();
+  await page.getByRole("heading", { name: "Wheel, that happened." }).waitFor();
+  assert.equal(
+    await page.getByLabel("Leaderboard nickname", { exact: true }).inputValue(),
+    "Integration Hamster",
+  );
+  assert.ok(
+    await page.getByRole("button", { name: "Share score", exact: true }).isVisible(),
+  );
+  await page.getByRole("button", { name: "Close", exact: true }).click();
+  check("A dismissed result reopens from the ended game with its nickname");
   await page.locator(".wallet-button").click();
   await page.getByRole("button", { name: "Disconnect", exact: true }).click();
   await page.getByRole("button", { name: "Connect", exact: true }).waitFor();
@@ -359,6 +370,51 @@ try {
     .getByText("Integration Hamster", { exact: true })
     .waitFor();
   check("Scores remain publicly readable after disconnecting and reloading");
+  const maxWallet = createWalletClient({
+    account: accounts[1],
+    chain: sepolia,
+    transport: http(rpcUrl),
+  });
+  const maxHash = await maxWallet.writeContract({
+    address: contract,
+    abi: artifact.abi,
+    functionName: "submitScore",
+    args: [1000000000n, "SirSqueeksalotTheGreates"],
+  });
+  await client.waitForTransactionReceipt({ hash: maxHash });
+  for (const width of [320, 390]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.reload();
+    await page
+      .getByRole("table")
+      .getByText("1,000,000,000", { exact: true })
+      .waitFor();
+    const fit = await page.evaluate(() => {
+      const row = [...document.querySelectorAll("tbody tr")].find((r) =>
+        r.textContent.includes("SirSqueeksalotTheGreates"),
+      );
+      const [, name, score] = row.cells;
+      return {
+        doc: document.documentElement.scrollWidth,
+        view: document.documentElement.clientWidth,
+        nameScroll: name.scrollWidth,
+        nameClient: name.clientWidth,
+        scoreScroll: score.scrollWidth,
+        scoreClient: score.clientWidth,
+        scoreRight: score.getBoundingClientRect().right,
+      };
+    });
+    assert.ok(fit.doc <= fit.view, `${width}: ${JSON.stringify(fit)}`);
+    assert.ok(fit.nameScroll <= fit.nameClient, `${width}: ${JSON.stringify(fit)}`);
+    assert.ok(fit.scoreScroll <= fit.scoreClient, `${width}: ${JSON.stringify(fit)}`);
+    assert.ok(fit.scoreRight <= fit.view, `${width}: ${JSON.stringify(fit)}`);
+    await page
+      .getByRole("table")
+      .screenshot({ path: `${output}/max-entry-${width}.png` });
+  }
+  check(
+    "A MAX_SCORE entry with a 24-character nickname fits the board at 320 and 390",
+  );
   assert.deepEqual(errors, []);
   check("No uncaught exceptions during transaction flow");
 } catch (e) {

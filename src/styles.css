@@ -454,6 +454,9 @@ footer {
 .start-button svg:last-child {
   margin-inline-start: 24px;
 }
+.game-start .secondary {
+  min-width: 230px;
+}
 .game-start .small {
   font-weight: 600;
   color: #4e5f46;
@@ -786,7 +789,7 @@ th:first-child {
   width: 50px;
 }
 th:last-child {
-  width: 90px;
+  width: 128px;
   text-align: end;
 }
 td,
@@ -797,6 +800,9 @@ th {
 td:last-child {
   text-align: end;
   font-weight: 700;
+}
+td:nth-child(2) strong {
+  overflow-wrap: anywhere;
 }
 .player-address {
   display: block;
@@ -1375,7 +1381,8 @@ footer > a {
     bottom: 14px;
     gap: 6px;
   }
-  .start-button {
+  .start-button,
+  .game-start .secondary {
     min-height: 48px;
     min-width: 210px;
   }

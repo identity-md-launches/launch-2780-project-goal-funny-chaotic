@@ -13,6 +13,7 @@ export function GameBoard({
   setLocked,
   onEnd,
   onHelp,
+  onViewResult,
   restart,
   onRestartConsumed,
 }: {
@@ -23,6 +24,7 @@ export function GameBoard({
   setLocked: (value: boolean) => void;
   onEnd: (result: GameSnapshot) => void;
   onHelp: () => void;
+  onViewResult: () => void;
   restart: boolean;
   onRestartConsumed: () => void;
 }) {
@@ -229,6 +231,9 @@ export function GameBoard({
             <button className="primary start-button" onClick={start}>
               Run again
               <Icon name="arrow" />
+            </button>
+            <button className="secondary" onClick={onViewResult}>
+              View results
             </button>
           </div>
         )}

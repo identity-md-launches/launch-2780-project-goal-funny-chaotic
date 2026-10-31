@@ -231,7 +231,17 @@ Actual results, design findings/fixes and remaining limitations are recorded in
 [`artifacts/validation.md`](artifacts/validation.md). The final production
 build, typecheck, 10 Node tests, 11 Foundry tests (including 256 fuzz cases),
 Chromium and WebKit interaction checks, and local transaction flow passed.
-The pinned design probe passed all 16 checks. Build warnings about an unused
+The pinned design probe passed all 16 checks.
+
+Revision checks (2026-10-31), run after the final source change: `npm run
+typecheck` and `npm run build` succeeded; `npm test` 10/10; `forge test` 11/11;
+`npm run test:browser` (Chromium) 17/17; `npm run test:chain-ui` 12/12 on
+isolated Anvil, including two new checks: a dismissed result reopens from the
+ended game's **View results** button with its nickname, and a contract-maximum
+1,000,000,000 score with a 24-character unbroken nickname fits the leaderboard at
+320 and 390 wide (document scrollWidth equals clientWidth). Against the previous
+CSS the same check failed at 320 with document width 328. The design probe again
+passed 16/16. WebKit runs were not repeated in this revision. Build warnings about an unused
 dependency’s browser-externalized `node:worker_threads` import and a large main
 chunk are recorded there; they are not claimed as runtime failures or omitted.
 
