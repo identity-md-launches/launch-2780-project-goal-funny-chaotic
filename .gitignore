@@ -1,0 +1,11 @@
+# Explicit budget: artifacts/delivery-budget.md. This file is limited to 1 KiB.
+**/node_modules/
+**/.cache/
+**/.vite/
+**/coverage/
+**/*.tsbuildinfo
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+test/scratch/
+# dist/ is an intentional, required deliverable.

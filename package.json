@@ -1,0 +1,39 @@
+{
+  "name": "squeek-run",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "test:browser": "node tests/browser.mjs",
+    "test:chain-ui": "node tests/chain-ui.mjs",
+    "assets:share": "node scripts/render-share.mjs",
+    "test:contract": "forge test --root contracts",
+    "contract:artifact": "node scripts/export-contract.mjs",
+    "configure:leaderboard": "node scripts/configure-leaderboard.mjs"
+  },
+  "dependencies": {
+    "@coinbase/wallet-sdk": "4.4.0",
+    "@tanstack/react-query": "5.105.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "viem": "2.57.13",
+    "wagmi": "3.7.9"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "playwright": "1.64.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.5"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "chainId": 11155111,
+  "address": null,
+  "transactionHash": null,
+  "status": "not_deployed",
+  "reason": "No authorized funded Sepolia signer was supplied. Deploy.s.sol and the configuration verifier are ready for the site operator."
+}
